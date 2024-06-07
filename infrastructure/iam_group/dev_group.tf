@@ -1,5 +1,5 @@
 module "dev" {
-    source = "../../../modules/group"
+    source = "../../..//modules/group"
     
     group_name = "dev"
     region     = "us-east-1"
