@@ -1,5 +1,5 @@
 terraform {
-  source = "../../../..//infrastructure/region/iam_group"
+  source = "../../../..//infrastructure/iam_group"
 }
 
 

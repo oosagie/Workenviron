@@ -3,11 +3,11 @@ on:
   workflow_dispatch
   push:
     branches:
-      - main
+      - master
       
   pull_request:
     branches:
-      -main
+      - master
       
 permissions:
   contents: write
@@ -19,7 +19,7 @@ concurrency: cloudsentrics # This will ensure only a single workflow is run at a
 jobs: 
   kics:
     name: 'Run KICS scan'
-    uses: ./github/workflow/terraform_kics.yml
+    uses: ./.github/workflows/terraform_kics.yml
     with:
     ENABLE_COMMENTS: true 
     WORKING_DIRECTORY: 'infrastructure/iam_group'
@@ -27,50 +27,50 @@ jobs:
   run_plan_in_prod_environment:
     name: Prod-environment, terraform Plan 
     needs: [kics]
-    uses: ./. github/workflows/reusable_plan_actions.yml
+    uses: ./.github/workflows/reusable_plan_actions.yml
     with:
-      #ENVIRONMENT_NAME: 'prod'
-      TERRAFORM_VERSION: '1.7.4'
-      TERRAGRUNT_VERSION: '0.58.0'
-      TERRAFORM_WORKING_DIR: ./applied/dev
+      ENVIRONMENT_NAME: 'prod'
+      TERRAFORM_VERSION: '1.7.2'
+      TERRAGRUNT_VERSION: '0.56.0'
+      TERRAFORM_WORKING_DIR: ./applied/prod/iam
       AWS_REGION: 'us-east-1'
     secrets: inherit
 
   run_apply_in_prod_environment:
     name: prod-environment, terraform apply
     needs: [run_plan_in_prod_environment]
-    uses: ./. github/workflows/reusable_apply_actions.yml
+    uses: ./.github/workflows/reusable_apply_actions.yml
     with:
       ENVIRONMENT_NAME: 'prod'
       TERRAFORM_VERSION: '1.7.2'
-      TERRAGRUNT_VERSION: '0.58.0'
-      TERRAFORM_WORKING_DIR: ./applied/dev 
-      AWS _REGION: 'us-east-1
-    secrets: inherit
-
-    run_plan_in_dev_environment:
-    name: dev-environment, terraform plan
-    needs: [run_apply_in_pr0d_environment] 
-    uses: ./. github/workflows/reusable_plan_actions.yml
-    with:
-      ENVIRONMENT_NAME: 'dev'
-      TERRAFORM_VERSION: '1.1.1'
       TERRAGRUNT_VERSION: '0.56.0'
-      TERRAFORM_WORKING_DIR: ./applied/prod
-      AWS _REGION: 'us-east-1
+      TERRAFORM_WORKING_DIR: ./applied/prod/iam 
+      AWS _REGION: 'us-east-1'
     secrets: inherit
 
-  run_apply_in_dev_environment:
-    name: dev-environment, terraform apply
-    needs: [run_plan_in_dev_environment] 
-    uses: ./. github/workflows/reusable_apply_actions.yml
-    with:
-      ENVIRONMENT_NAME: 'dev'
-      TERRAFORM_VERSION: '1.7.2'
-      TERRAGRUNT_VERSION: '0.58.0'
-      TERRAFORM_WORKING_DIR: ./applied/dev 
-      AWS _REGION: 'us-east-1
-    secrets: inherit
+  #   run_plan_in_dev_environment:
+  #   name: dev-environment, terraform plan
+  #   needs: [run_apply_in_pr0d_environment] 
+  #   uses: ./.github/workflows/reusable_plan_actions.yml
+  #   with:
+  #     ENVIRONMENT_NAME: 'dev'
+  #     TERRAFORM_VERSION: '1.1.1'
+  #     TERRAGRUNT_VERSION: '0.56.0'
+  #     TERRAFORM_WORKING_DIR: ./applied/prod
+  #     AWS _REGION: 'us-east-1
+  #   secrets: inherit
+
+  # run_apply_in_dev_environment:
+  #   name: dev-environment, terraform apply
+  #   needs: [run_plan_in_dev_environment] 
+  #   uses: ./. github/workflows/reusable_apply_actions.yml
+  #   with:
+  #     ENVIRONMENT_NAME: 'dev'
+  #     TERRAFORM_VERSION: '1.7.2'
+  #     TERRAGRUNT_VERSION: '0.58.0'
+  #     TERRAFORM_WORKING_DIR: ./applied/dev 
+  #     AWS _REGION: 'us-east-1
+  #   secrets: inherit
 
   
 
