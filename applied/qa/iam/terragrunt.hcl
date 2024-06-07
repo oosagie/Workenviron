@@ -1,9 +1,9 @@
 terraform {
-  source = "../../..//modules/groups"
+  source = "../../..//infrastructure/iam_group"
 }
-
-
-include   "root" {
+include "root" {
   path = find_in_parent_folders()
 }
+
+
 

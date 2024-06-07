@@ -1,5 +1,5 @@
 terraform {
-  source = "../../../..//infrastructure/iam_group"
+  source = "../../../..//modules/oidc_provider"
 }
 
 
