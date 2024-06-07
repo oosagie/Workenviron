@@ -21,8 +21,9 @@ jobs:
     name: 'Run KICS scan'
     uses: ./.github/workflows/terraform_kics.yml
     with:
-    ENABLE_COMMENTS: true 
-    WORKING_DIRECTORY: 'infrastructure/iam_group'
+      ENABLE_COMMENTS: true 
+      WORKING_DIRECTORY: 'infrastructure/iam_group'
+    secrets: inherit
 
   run_plan_in_prod_environment:
     name: Prod-environment, terraform Plan 
