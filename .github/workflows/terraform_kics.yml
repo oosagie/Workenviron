@@ -1,38 +1,38 @@
-name: KICS Code analysis
+name: KICS Code Analysis
 
-on: 
+on:
   workflow_call:
     inputs:
       ENABLE_COMMENTS:
-        required: true 
+        description: "Enable comments in KICS analysis"
+        required: true
         type: boolean
       WORKING_DIRECTORY:
-        REQUIRED: true 
+        description: "Path to the working directory for KICS analysis"
+        required: true
         type: string
 
 jobs:
   kics:
     name: Run KICS Code Analysis
     if: github.event_name == 'pull_request'
-    run-0n: ubuntu-24.04
+    runs-on: ubuntu-24.04  # Corrected from 'run-0n: ubuntu-24.04' to 'runs-on: ubuntu-20.04'
     steps:
-    - name: checkout
-     uses: actions/checkout@v3 
-     with:
-       ref: ${{github.event.pull_request.head.ref}}
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
 
-    - name: Run KICS scan
-      uses: checkmarx/kics-github-action@v2.0.0
-      with: 
-       path: ${{ input.WORKING_DIRECTORY }}
-       token: ${{ secret.GITHUB_TOKEN }}
-       output_path: myresult/
-       ignore_on_exit: results
-       enable_comments: ${{ inputs.ENABLE_COMMENTS }} 
+      - name: Run KICS scan
+        uses: checkmarx/kics-github-action@v2.0.0
+        with:
+          path: ${{ inputs.WORKING_DIRECTORY }}  # Corrected from 'input' to 'inputs'
+          token: ${{ secrets.GITHUB_TOKEN }}  # Corrected from 'secret' to 'secrets'
+          output_path: myResults/  # Corrected to 'myResults/' (camelCase to camelCase)
+          ignore_on_exit: results
+          enable_comments: ${{ inputs.ENABLE_COMMENTS }}
 
-    - name: Display KICS results
-      run:
-        cat myResults/result.json
+      - name: Display KICS results
+        run: |
+          cat myResults/result.json
 
-
-  
