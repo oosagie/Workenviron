@@ -26,9 +26,9 @@ jobs:
       - name: Run KICS scan
         uses: checkmarx/kics-github-action@v2.0.0
         with:
-          path: ${{ inputs.WORKING_DIRECTORY }}  # Corrected from 'input' to 'inputs'
-          token: ${{ secrets.GITHUB_TOKEN }}  # Corrected from 'secret' to 'secrets'
-          output_path: myResults/  # Corrected to 'myResults/' (camelCase to camelCase)
+          path: ${{ inputs.WORKING_DIRECTORY }}  
+          token: ${{ secrets.GITHUB_TOKEN }}  
+          output_path: myResults/  
           ignore_on_exit: results
           enable_comments: ${{ inputs.ENABLE_COMMENTS }}
 
@@ -38,5 +38,5 @@ jobs:
 
 
 
-          
+
 
