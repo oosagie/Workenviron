@@ -3,7 +3,7 @@ name: KICS Code analysis
 on: 
   workflow_call
     inputs:
-      ENABLE_COMMENTS
+      ENABLE_COMMENTS:
         required: true 
         type: boolean
       WORKING_DIRECTORY:

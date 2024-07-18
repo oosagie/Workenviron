@@ -7,18 +7,22 @@ on:
         description: "Terraform version to be installed on the runner"
         required: true
         type: string
+
       TERRAGRUNT_VERSION:
         description: "Terragrunt version to be installed on the runner"
         required: true
         type: string
+
       TERRAFORM_WORKING_DIR:
         description: "Path to the Terraform configuration"
         required: true
         type: string
+
       AWS_REGION:
         description: "AWS region to be used"
         required: true
         type: string
+
       ENVIRONMENT_NAME:
         description: "Name of the environment"
         required: true
@@ -29,7 +33,7 @@ jobs:
     name: "Terragrunt Apply"
     environment: ${{ inputs.ENVIRONMENT_NAME }}
     if: github.event_name == 'push'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: ${{ inputs.TERRAFORM_WORKING_DIR }}
